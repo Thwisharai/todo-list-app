@@ -1,0 +1,413 @@
+/* ==========================================
+   TO-DO LIST APP
+   Designed by Thwisha Rai
+   ========================================== */
+
+/* General settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #6c63ff;
+    --primary-dark: #5548e8;
+    --background: #f4f5ff;
+    --card: #ffffff;
+    --text: #252641;
+    --muted: #777b91;
+    --border: #e5e7f2;
+    --success: #20a779;
+    --danger: #e74c3c;
+    --shadow: 0 15px 40px rgba(55, 55, 100, 0.10);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    padding: 40px 18px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    background: linear-gradient(135deg, #edf0ff, #fdf2ff);
+}
+
+/* Main heading */
+.app-header {
+    max-width: 760px;
+    margin: 0 auto 25px;
+    text-align: center;
+}
+
+.app-header h1 {
+    margin-bottom: 8px;
+    color: var(--primary);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.tagline {
+    color: var(--muted);
+    font-size: 1rem;
+}
+
+/* Main application card */
+main {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 30px;
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+}
+
+/* Keyboard accessibility link */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 15px;
+    z-index: 10;
+    padding: 10px 15px;
+    color: white;
+    background: var(--primary);
+    border-radius: 8px;
+}
+
+.skip-link:focus {
+    top: 15px;
+}
+
+/* Add task form */
+.add-form {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.add-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    font: inherit;
+    color: var(--text);
+    background: #fafaff;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.add-form input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.12);
+}
+
+.add-form input::placeholder {
+    color: #a2a5b8;
+}
+
+/* General button styling */
+button {
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s,
+                border-color 0.2s, transform 0.2s;
+}
+
+.add-form button {
+    padding: 12px 24px;
+    color: white;
+    background: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.add-form button:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+/* Filters and clear completed button */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin: 20px 0;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-btn {
+    min-height: 40px;
+    padding: 8px 16px;
+    color: var(--muted);
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.filter-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.filter-btn[aria-pressed="true"] {
+    color: white;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.text-btn {
+    padding: 8px 4px;
+    color: var(--danger);
+    background: transparent;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.text-btn:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+.text-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Task list */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 25px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 15px;
+    background: #fafaff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.task-item:hover {
+    border-color: #c9c5ff;
+    box-shadow: 0 5px 15px rgba(108, 99, 255, 0.06);
+}
+
+/* Task checkbox */
+.task-check {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    accent-color: var(--success);
+    cursor: pointer;
+}
+
+/* Task text */
+.task-text {
+    flex: 1;
+    min-width: 100px;
+    overflow-wrap: anywhere;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.task-item.completed .task-text {
+    color: #999daf;
+    text-decoration: line-through;
+}
+
+/* Edit task input */
+.task-edit-input {
+    flex: 1;
+    min-width: 100px;
+    padding: 8px 10px;
+    color: var(--text);
+    background: white;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    font: inherit;
+}
+
+/* Edit and delete buttons */
+.task-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.icon-btn {
+    min-height: 36px;
+    padding: 6px 13px;
+    color: var(--primary);
+    background: white;
+    border: 1px solid #dcd9ff;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.icon-btn:hover {
+    color: white;
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.icon-btn.delete {
+    color: var(--danger);
+    background: white;
+    border-color: #ffd8d4;
+}
+
+.icon-btn.delete:hover {
+    color: white;
+    background: var(--danger);
+    border-color: var(--danger);
+}
+
+/* Empty task message */
+.empty-state {
+    padding: 30px 10px;
+    color: var(--muted);
+    text-align: center;
+    font-style: italic;
+}
+
+/* Task counter */
+.task-count {
+    margin-top: 20px;
+    padding-top: 15px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* Status and validation messages */
+.form-error {
+    margin: 8px 0;
+    color: var(--danger);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#todo-status {
+    margin-top: 12px;
+    color: var(--success);
+    font-size: 0.9rem;
+}
+
+/* Hide elements accessibly */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Footer */
+.app-footer {
+    max-width: 760px;
+    margin: 25px auto 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.app-footer code {
+    padding: 2px 5px;
+    color: var(--primary-dark);
+    background: #eceaff;
+    border-radius: 5px;
+}
+
+/* Keyboard focus */
+:focus-visible {
+    outline: 3px solid #8c85ff;
+    outline-offset: 3px;
+}
+
+/* Mobile responsive design */
+@media (max-width: 600px) {
+    body {
+        padding: 25px 12px;
+    }
+
+    main {
+        padding: 20px 15px;
+        border-radius: 16px;
+    }
+
+    .add-form {
+        flex-wrap: wrap;
+    }
+
+    .add-form input {
+        flex-basis: 100%;
+    }
+
+    .add-form button {
+        width: 100%;
+    }
+
+    .toolbar {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .task-item {
+        gap: 10px;
+    }
+
+    .task-actions {
+        width: 100%;
+        padding-left: 30px;
+    }
+
+    .app-footer {
+        padding: 0 8px;
+    }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
+}

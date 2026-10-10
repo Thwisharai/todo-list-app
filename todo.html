@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List — Thwisha Rai</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="app-header">
+    <h1>To-Do List</h1>
+    <p class="tagline">Tasks are saved automatically in this browser.</p>
+  </header>
+
+  <main id="main-content">
+    <form id="add-form" class="add-form">
+      <label for="new-task" class="visually-hidden">New task</label>
+      <input
+        type="text"
+        id="new-task"
+        name="new-task"
+        placeholder="Add a new task…"
+        autocomplete="off"
+        maxlength="200"
+        required
+      >
+      <button type="submit">Add</button>
+    </form>
+    <p id="form-error" class="form-error" role="alert" hidden></p>
+
+    <div class="toolbar">
+      <div class="filters" role="group" aria-label="Filter tasks">
+        <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="filter-btn" data-filter="active" aria-pressed="false">Active</button>
+        <button type="button" class="filter-btn" data-filter="completed" aria-pressed="false">Completed</button>
+      </div>
+      <button type="button" id="clear-completed" class="text-btn">Clear completed</button>
+    </div>
+
+    <ul id="task-list" class="task-list"></ul>
+
+    <p id="empty-state" class="empty-state" hidden>No tasks here yet.</p>
+
+    <p id="task-count" class="task-count" aria-live="polite">0 items left</p>
+
+    <p id="status" class="visually-hidden" role="status" aria-live="polite"></p>
+  </main>
+
+  <footer class="app-footer">
+    <p>Built with vanilla JavaScript: CRUD, <code>localStorage</code>, filtering, and delegated events.</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
